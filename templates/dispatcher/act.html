@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% extends "dispatcher/base.html" %}
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    {% block content %}
+
+
+
+    <center><div style="padding-left:16px"><h2>Top Navigation Example</h2><p>Some content..</p></div></center><style>
+      
+    #center {
+      width: 500px;
+      height: 600px;
+      border: 1px solid blue;
+    }
+
+  .formclass {
+    float: left; /*Задаем обтекание*/
+     line-height: 10px;/*Высота строки +  верт. центрирования текста*/
+     font-size: 16px;
+     background: rgb(216, 216, 216);
+     color: rgb(14, 5, 5);
+     margin-left: 30px;
+     margin-top: 25px;
+     width: 320px; /*Фиксируем ширину блока*/
+     margin-right: 10px;
+     text-align: center; /*Центрируем текст по горизонтали*/
+     border-radius: 5px;
+  }
+  </style>
+  <center>
+    <div id="center">
+      <h5> Заявка</h5>
+      <form action="{{HttpResponse}}" method="post">
+        {% csrf_token %}
+
+        <div>{{form}}</div>
+
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </center>
+
+
+  {% endblock %}
+
+  </body>
+
+</html>
