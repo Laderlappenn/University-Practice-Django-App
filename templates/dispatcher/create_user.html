@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% extends "dispatcher/base.html" %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+{% block content %}
+
+
+<h5> Создать пользователя</h5>
+<form action="{{HttpResponse}}" method="post">
+  {% csrf_token %}
+
+  <div><br>{{form}}</br></div>
+
+  <input type="submit" value="Submit">
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+</body>
+</html>

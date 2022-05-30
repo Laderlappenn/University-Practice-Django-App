@@ -13,6 +13,7 @@ body {
 .topnav {
   overflow: hidden;
   background-color: #333;
+  
 }
 
 .topnav a {
@@ -22,6 +23,8 @@ body {
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+  
+  
 }
 
 .topnav a:hover {
@@ -33,15 +36,18 @@ body {
   background-color: #4CAF50;
   color: white;
 }
+
+
+
 </style>
 </head>
 <body>
   
 <div class="topnav">
-  <a class="active" href="#home">Home</a>
-  <a href="#news">News</a>
-  <a href="#contact">Contact</a>
-  <a href="#about">About</a>
+  <a class="active" href="http://127.0.0.1:8000">Home</a>
+  <a href="http://127.0.0.1:8000/act/">act</a>
+  <a href="http://127.0.0.1:8000/list/">list</a>
+  <a href="http://127.0.0.1:8000/create/">create</a>
 </div>
 
 {% block content %}
