@@ -4,55 +4,8 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    {% block content %}
-
-    <style>
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  
-}
-
-.secondtopnav {
-  overflow: hidden;
-  background-color: #333;
-  /* border-radius: 5px; */
-  padding-left: 20px;
-  padding-right: 20px;
-  margin-left: 50px;
-  margin-right: 50px;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  
-}
-
-.secondtopnav a {
-  float: right;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-  margin-left: 40px;
-  margin-right: 40px;
  
-}
-
-.secondtopnav a:hover {
-  background-color: #ddd;
-  color: black;
-  
-}
-
-.secondtopnav a.active {
-  background-color: #4CAF50;
-  color: white;
-  padding-left: 25px;
-  padding-right: 25px;
-  
-}
-</style>
+    {% block content %}
 
 
 <br>
@@ -89,16 +42,36 @@ body {
   </style>
 
 
-  <center>
-    <div id="center">
-      
-   <h3 class="row">{{acts}} </h3>
-   <h3 class="row">{{acts}} </h3>
-   <h3 class="row">{{acts}} </h3>
+ 
+<table>
+  <thead>
+    <tr>
+      <th>User name</th>
+      <th>Title</th>
+      <th>Adress</th>
+      <th>Act type</th>
+      <th>Date created</th>
+      <th>Date updated</th>
+      <th>Url</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for act in acts %}
+    <tr>
+      <td>{{act.user}}</td>
+      <td>{{act.title}}</td>
+      <td>{{act.adress}}</td>
+      <td>{{act.act_type}}</td>
+      <td>{{act.date_created}}</td>
+      <td>{{act.date_updated}}</td>      
+      <td>URL</td>
+    
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
-
-   </div>
-  </center>
+  
  
 
   {% endblock %}
