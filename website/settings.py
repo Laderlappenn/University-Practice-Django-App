@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = '/profile/'
 LOGOUT_REDIRECT_URL = '/profile/'
+LOGIN_URL = 'http://127.0.0.1:8000/login/'
 # Application definition
 
 INSTALLED_APPS = [

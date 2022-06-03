@@ -32,12 +32,21 @@
       <form action="{{HttpResponse}}" method="post">
         {% csrf_token %}
 
-
+        {{form.user.label_tag}}
         {{form.user}} <br>
+
+        {{form.title.label_tag}}
         {{form.title}} <br>
+
+        {{form.adress.label_tag}}
         {{form.adress}}<br>
+
+        {{form.act_type.label_tag}}
         {{form.act_type}}<br>
+
+        {{form.text.label_tag}}
         {{form.text}}<br>
+
         <input type="submit" value="Отправить">
       </form>
 

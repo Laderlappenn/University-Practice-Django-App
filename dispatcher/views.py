@@ -1,7 +1,9 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, View
+
 
 
 from .forms import  ActForm #CreateUserForm
@@ -17,6 +19,7 @@ class BBLoginView(LoginView):
 class BBLogoutView(LoginRequiredMixin, LogoutView):
     template_name = 'dispatcher/logout.html'
 
+@login_required
 def profile(request):
     return render(request,'dispatcher/profile.html', {})
 
