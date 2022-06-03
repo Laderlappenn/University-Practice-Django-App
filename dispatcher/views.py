@@ -1,5 +1,8 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, View
+
 
 from .forms import  ActForm #CreateUserForm
 from .models import Act
@@ -7,6 +10,15 @@ from .models import Act
 
 def home(request):
     return render (request, 'dispatcher/home.html',{})
+
+class BBLoginView(LoginView):
+    template_name = 'dispatcher/login.html'
+
+class BBLogoutView(LoginRequiredMixin, LogoutView):
+    template_name = 'dispatcher/logout.html'
+
+def profile(request):
+    return render(request,'dispatcher/profile.html', {})
 
 
 # def create(request):
@@ -41,6 +53,7 @@ def act_page(request):
 
 def act_list(request):
     queryset = Act.objects.all
+    #act = Act.objects.get(pk=user)
 
 
 

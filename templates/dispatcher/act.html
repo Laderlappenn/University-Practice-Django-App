@@ -4,45 +4,44 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+ <body>
+  {% block content %}
   <style>
-    {% block content %}
 
 
-
-    <center><div style="padding-left:16px"><h2>Top Navigation Example</h2><p>Some content..</p></div></center><style>
-      
-    #center {
-      width: 500px;
-      height: 600px;
-      border: 1px solid blue;
-    }
-
-  .formclass {
-    float: left; /*Задаем обтекание*/
+  .special {
      line-height: 10px;/*Высота строки +  верт. центрирования текста*/
      font-size: 16px;
-     background: rgb(216, 216, 216);
+     background: rgb(243, 243, 243);
      color: rgb(14, 5, 5);
      margin-left: 30px;
      margin-top: 25px;
      width: 320px; /*Фиксируем ширину блока*/
      margin-right: 10px;
      text-align: center; /*Центрируем текст по горизонтали*/
-     border-radius: 5px;
+     border-radius: 3px;
+     border-color: rgb(14, 5, 5);
+     border-width: 1px;
+     resize: none;
   }
   </style>
-  <center>
-    <div id="center">
+
+
       <h5> Заявка</h5>
       <form action="{{HttpResponse}}" method="post">
         {% csrf_token %}
 
-        <div><br>{{form}}</br></div>
 
-        <input type="submit" value="Submit">
+        {{form.user}} <br>
+        {{form.title}} <br>
+        {{form.adress}}<br>
+        {{form.act_type}}<br>
+        {{form.text}}<br>
+        <input type="submit" value="Отправить">
       </form>
-    </div>
-  </center>
+
+
 
 
   {% endblock %}

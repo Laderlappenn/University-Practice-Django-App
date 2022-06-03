@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from django import forms
+#from django import forms
 from .models import Act
 
 # RELEVANCE_CHOICES = (
@@ -23,7 +23,16 @@ from .models import Act
 
 
 class ActForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['user'].widget.attrs.update({'class': 'special'})
+        self.fields['title'].widget.attrs.update({'class': 'special'})
+        self.fields['adress'].widget.attrs.update({'class': 'special'})
+        self.fields['act_type'].widget.attrs.update({'class': 'special'})
+        self.fields['text'].widget.attrs.update({'class': 'special'})
+
+
+
     class Meta:
         model = Act
         fields = '__all__'
-
