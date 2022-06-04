@@ -38,7 +38,7 @@ def profile(request):
 #     return render(request, 'dispatcher/create_user.html', {'form':form})
 
 @login_required
-def act_page(request):
+def act_page_create(request):
     form_class = ActForm
 
     form = form_class(request.POST or None)
@@ -54,8 +54,21 @@ def act_page(request):
     return render(request, 'dispatcher/act.html', {'form': form})
 
 @login_required
+def act_page(request, actid):
+
+    queryset = Act.objects.get(id=actid)
+    # return render(request, 'dispatcher/act_page.html', {'act': queryset})
+    if request.user.id == queryset.user_id:
+        return render(request, 'dispatcher/act_page.html', {'act':queryset})
+
+    else:
+        return render(request, 'dispatcher/no_access.html')
+
+@login_required
 def act_list(request):
-    queryset = Act.objects.all
+    current_user = request.user
+
+    queryset = Act.objects.filter(user_id=current_user)
     #act = Act.objects.get(pk=user)
 
 

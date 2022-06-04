@@ -46,23 +46,13 @@ body {
   <a class="active" href="http://127.0.0.1:8000">Home</a>
   <a href="http://127.0.0.1:8000/act/">Создать заявку</a>
   <a href="http://127.0.0.1:8000/list/">Смотреть заявки</a>
-  <a href="http://127.0.0.1:8000/login/">Авторизация</a>
   <a href="http://127.0.0.1:8000/profile/">Профиль</a>
-</div>
-
-<ul class="col nav justify-content-end border">
-  <li class="nav-item"><a>Регистрация</a>
-{% if user.is_authenticated %}
-  <li class="nav-item dropdown">
-</li>
-{% else %}
-  <li class="nav-item"> <a href="{% url 'dispatcher:login' %}">Вход</a> </li>
-
-{% endif %}
-  {% if user.is_authenticated %}
-   <p><a href="{% url 'dispatcher:logout' %}">Выход</a></p>
+  {% if user.is_authenticated %}<a href="{% url 'dispatcher:logout' %}">Выход</a>
+  {% else %}
+  <a>Регистрация</a>
+  <a href="{% url 'dispatcher:login' %}">Вход</a>
   {% endif %}
-</ul>
+</div>
 
 <hr>
 {% block content %}

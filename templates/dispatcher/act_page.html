@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends "dispatcher/base.html" %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    {% block title %}Заявка{% endblock %}
+    {% block content %}
+
+ 
+    <table>
+        <thead>
+          <tr>
+            <th>User name</th>
+            <th>Title</th>
+            <th>Adress</th>
+            <th>Act type</th>
+            <th>Date created</th>
+            <th>Date updated</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{act.user}}</td>
+            <td>{{act.title}}</td>
+            <td>{{act.adress}}</td>
+            <td>{{act.act_type}}</td>
+            <td>{{act.date_created}}</td>
+            <td>{{act.date_updated}}</td>     
+          </tr>
+      
+        </tbody>
+      </table>
+
+
+
+
+
+    {% endblock %}
+
+</body>
+</html>

@@ -17,10 +17,7 @@
 <br>
 
 
-<div class="secondtopnav">
-  <a class="active" href="http://127.0.0.1:8000/act/">Создать заявку</a>
- 
-</div>
+
 
 
 
@@ -64,7 +61,7 @@
       <td>{{act.act_type}}</td>
       <td>{{act.date_created}}</td>
       <td>{{act.date_updated}}</td>      
-      <td>URL</td>
+      <td><a href="http://127.0.0.1:8000/act/{{act.id}}">Смотреть заявку</a></td>
     
     </tr>
     {% endfor %}
