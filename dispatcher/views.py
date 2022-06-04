@@ -37,7 +37,7 @@ def profile(request):
 #
 #     return render(request, 'dispatcher/create_user.html', {'form':form})
 
-
+@login_required
 def act_page(request):
     form_class = ActForm
 
@@ -53,7 +53,7 @@ def act_page(request):
 
     return render(request, 'dispatcher/act.html', {'form': form})
 
-
+@login_required
 def act_list(request):
     queryset = Act.objects.all
     #act = Act.objects.get(pk=user)
