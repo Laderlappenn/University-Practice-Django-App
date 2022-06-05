@@ -11,5 +11,8 @@ urlpatterns = [
     # path('create/', views.create, name='create'),
     path('act/',views.act_page_create, name='act'),
     path('list/',views.act_list, name='act_list'),
-    re_path(r'^act/(?P<actid>\d+)/',views.act_page, name='act_page')
+    path('act/<int:pk>/edit/',views.act_edit_form, name='act-edit-form'),
+    re_path(r'^act/(?P<actid>\d+)/',views.act_page, name='act_page'),
+
+
     ]

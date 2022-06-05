@@ -1,9 +1,9 @@
-from django.shortcuts import render, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect, get_object_or_404
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, View
-
+from django.http import  QueryDict
 
 
 from .forms import  ActForm #CreateUserForm
@@ -56,13 +56,29 @@ def act_page_create(request):
 @login_required
 def act_page(request, actid):
 
-    queryset = Act.objects.get(id=actid)
-    # return render(request, 'dispatcher/act_page.html', {'act': queryset})
+    queryset = get_object_or_404(Act, id=actid) #Act.objects.get(id=actid)
     if request.user.id == queryset.user_id:
-        return render(request, 'dispatcher/act_page.html', {'act':queryset})
+        if request.method == 'GET':
+            return render(request, 'dispatcher/act_page.html', {'act':queryset})
+        elif request.method == 'PUT':
+            data = QueryDict(request.body).dict()
+            form = ActForm(data, instance=queryset)
+            if form.is_valid():
+                form.save()
+                return render(request,'dispatcher/details/act-detail.html', {'act':queryset})
+
+            return render(request, 'dispatcher/forms/edit-act-form.html', {'form': form})
 
     else:
         return render(request, 'dispatcher/no_access.html')
+
+def act_edit_form(request, pk):
+    queryset = get_object_or_404(Act, pk=pk)
+    form = ActForm(instance=queryset)
+
+    return render(request,'dispatcher/forms/edit-act-form.html',{'act':queryset,'form':form})
+
+
 
 @login_required
 def act_list(request):

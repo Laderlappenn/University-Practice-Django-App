@@ -1,0 +1,28 @@
+<table>
+    <thead>
+      <tr>
+        <th>User name</th>
+        <th>Title</th>
+        <th>Adress</th>
+        <th>Act type</th>
+        <th>Act text</th>
+        <th>Date created</th>
+        <th>Date updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{act.user}}</td>
+        <td>{{act.title}}</td>
+        <td>{{act.adress}}</td>
+        <td>{{act.act_type}}</td>
+        <td>{{act.text}}</td>
+        <td>{{act.date_created}}</td>
+        <td>{{act.date_updated}}</td>     
+      </tr>
+    
+    </tbody>
+  </table>
+<button class="btn btn-primary"
+    hx-get="{% url 'dispatcher:act-edit-form' act.id %}"
+    hx-target="#act-details">Click To Edit</button>
