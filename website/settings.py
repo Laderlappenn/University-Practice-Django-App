@@ -32,8 +32,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = '/profile/'
-LOGOUT_REDIRECT_URL = '/profile/'
-LOGIN_URL = 'http://127.0.0.1:8000/login/'
+
+#редирект на логин, когда он нужен
+LOGIN_URL = '/login/'
 # Application definition
 
 INSTALLED_APPS = [
@@ -115,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Almaty'
 
 USE_I18N = True
 
