@@ -1,2 +1,2 @@
 .env
-dispatcher/__pycache__/
+__pycache__

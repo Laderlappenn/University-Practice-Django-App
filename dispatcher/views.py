@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, View
 from django.http import  QueryDict
-from datetime import datetime
+
 from .forms import  ActForm #CreateUserForm
 from .models import Act
 
@@ -81,10 +81,10 @@ def act_list(request):
     return render(request, 'dispatcher/act_list.html', {'acts':queryset})
 
 @login_required
-def dispetcher_act_list(request):
-    print(datetime.now)
+def dispatcher_act_list(request):
+
     if request.user.is_staff == 1:
         queryset = Act.objects.all()
-        return render(request, 'dispatcher/dispatcher_act_list.html',{'acts':queryset})
+        return render(request, 'dispatcher/act_list.html',{'acts':queryset})
     else:
         return render(request, 'dispatcher/no_access.html')

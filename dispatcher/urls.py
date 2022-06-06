@@ -13,7 +13,6 @@ urlpatterns = [
     path('list/',views.act_list, name='act_list'),
     path('act/<int:pk>/edit/',views.act_edit_form, name='act-edit-form'),
     re_path(r'^act/(?P<actid>\d+)/',views.act_page, name='act_page'),
-    path('dispatcher/list',views.dispetcher_act_list,name='dispatcher-act-list')
-
+    path('dispatcher/list',views.dispatcher_act_list,name='dispatcher-act-list'),
 
     ]
