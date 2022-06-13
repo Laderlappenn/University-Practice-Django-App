@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, View
 from django.http import  QueryDict
 
+
 from .forms import  ActForm #CreateUserForm
 from .models import Act
 
@@ -37,7 +38,6 @@ def profile(request):
 @login_required
 def act_page_create(request):
     form_class = ActForm
-
     form = form_class(request.POST or None)
     if request.method == 'POST':
         form = ActForm(request.POST)
@@ -56,6 +56,7 @@ def act_page(request, actid):
     queryset = get_object_or_404(Act, id=actid) #Act.objects.get(id=actid)
     if request.user.id == queryset.user_id or request.user.is_staff == 1:
         if request.method == 'GET':
+            print(queryset.do_until)
             return render(request, 'dispatcher/act_page.html', {'act':queryset})
         elif request.method == 'PUT':
             data = QueryDict(request.body).dict()
@@ -84,7 +85,7 @@ def act_list(request):
 def dispatcher_act_list(request):
 
     if request.user.is_staff == 1:
-        queryset = Act.objects.all()
+        queryset = Act.objects.all().order_by('-date_updated')
         return render(request, 'dispatcher/act_list.html',{'acts':queryset})
     else:
         return render(request, 'dispatcher/no_access.html')

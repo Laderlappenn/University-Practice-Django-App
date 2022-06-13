@@ -36,3 +36,5 @@ class ActForm(ModelForm):
     class Meta:
         model = Act
         fields = '__all__'
+        exclude = ('act_processing', 'do_until', )
+

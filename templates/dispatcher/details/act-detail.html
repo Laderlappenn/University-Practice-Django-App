@@ -8,6 +8,8 @@
         <th>Act text</th>
         <th>Date created</th>
         <th>Date updated</th>
+         <th>Act processing</th>
+         <th>Do untill</th>
       </tr>
     </thead>
     <tbody>
@@ -18,7 +20,16 @@
         <td>{{act.act_type}}</td>
         <td>{{act.text}}</td>
         <td>{{act.date_created}}</td>
-        <td>{{act.date_updated}}</td>     
+        <td>{{act.date_updated}}</td>
+        <td>{{act.act_processing}}</td>
+        {% if act.do_until == None %}
+        <td>No date</td>
+        {% else %}
+        <td>{{act.do_until}}</td>
+        {% endif %}
+
+
+
       </tr>
     
     </tbody>
