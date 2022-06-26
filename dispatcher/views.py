@@ -56,19 +56,20 @@ def act_page(request, actid):
     queryset = get_object_or_404(Act, id=actid) #Act.objects.get(id=actid)
     if request.user.id == queryset.user_id or request.user.is_staff == 1:
         if request.method == 'GET':
-            print(queryset.do_until)
             return render(request, 'dispatcher/act_page.html', {'act':queryset})
         elif request.method == 'PUT':
             data = QueryDict(request.body).dict()
             form = ActForm(data, instance=queryset)
             if form.is_valid():
                 form.save()
+                Act.objects.filter(id=actid).update(act_processing='Ожидание принятия заявки')
                 return render(request,'dispatcher/details/act-detail.html', {'act':queryset})
 
             return render(request, 'dispatcher/forms/edit-act-form.html', {'form': form})
 
     else:
         return render(request, 'dispatcher/no_access.html')
+
 
 def act_edit_form(request, pk):
     queryset = get_object_or_404(Act, pk=pk)
@@ -89,3 +90,15 @@ def dispatcher_act_list(request):
         return render(request, 'dispatcher/act_list.html',{'acts':queryset})
     else:
         return render(request, 'dispatcher/no_access.html')
+
+
+def return_act(request, actid):
+    if request.user.is_staff == 1:
+        Act.objects.filter(id=actid).update(act_processing='Заявка возвращена')
+
+        return render(request, 'dispatcher/details/return-detail.html')
+
+def accept_act(request, actid):
+    if request.user.is_staff == 1:
+        Act.objects.filter(id=actid).update(act_processing='Заявки принята')
+        return render(request, 'dispatcher/details/accept-detail.html')

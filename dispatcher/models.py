@@ -34,6 +34,7 @@ class Act(models.Model):
     adress = models.CharField(max_length=200)
     act_type = models.CharField(max_length=20)
     text = models.TextField()
+    image = models.ImageField(null=True, blank=True, upload_to='images/act_images')
 
     class ActProcesses(models.TextChoices):
         waiting = 'Ожидание принятия заявки'

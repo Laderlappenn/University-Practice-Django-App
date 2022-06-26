@@ -28,12 +28,13 @@
         <td>{{act.do_until}}</td>
         {% endif %}
 
-
-
       </tr>
-    
+
     </tbody>
   </table>
+  {% if act.image.url != None %}
+  <img src="{{ act.image.url }}" class="image-detail"><br>
+  {% endif %}
 <button class="btn btn-primary"
     hx-get="{% url 'dispatcher:act-edit-form' act.id %}"
     hx-target="#act-details">Click To Edit</button>

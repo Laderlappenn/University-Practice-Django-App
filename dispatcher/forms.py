@@ -30,7 +30,7 @@ class ActForm(ModelForm):
         self.fields['adress'].widget.attrs.update({'class': 'special'})
         self.fields['act_type'].widget.attrs.update({'class': 'special'})
         self.fields['text'].widget.attrs.update({'class': 'special'})
-
+        self.fields['image'].widget.attrs.update({'class': 'special'})
 
 
     class Meta:

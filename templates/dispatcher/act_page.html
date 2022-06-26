@@ -1,27 +1,43 @@
 <!DOCTYPE html>
 {% extends "dispatcher/base.html" %}
-    
-    {% block title %}Заявка{% endblock %} 
-    
-           
-    {% block content %}
 
- <!-- HTMX -->
-    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+{% block title %}Заявка{% endblock %}
 
-  <div class="container mt-4">
-      
-      <div id="act-details">
+
+{% block content %}
+
+<!-- HTMX -->
+<script src="https://unpkg.com/htmx.org@1.6.1"></script>
+
+<div class="container mt-4">
+
+  <div id="act-details">
     {% include 'dispatcher/details/act-detail.html' %}
-      </div>
+  </div>
 
 
-    
+
+  {% if request.user.is_staff == 1 %}
+
+
+  <button hx-get="return" hx-target="this" hx-swap="outerHTML">
+    Вернуть заявку
+  </button>
+  <button hx-get="accept" hx-target="this" hx-swap="outerHTML">
+    Принять заявку
+  </button>
+
+
+  {% else %}
+
+  {% endif %}
+
+
+
   <script>
-      document.body.addEventListener('htmx:configRequest', (event) => {
-          event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
-      })
+    document.body.addEventListener('htmx:configRequest', (event) => {
+      event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    })
   </script>
 </div>
-    {% endblock %}
-  
+{% endblock %}
