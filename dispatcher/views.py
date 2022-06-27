@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, View
 from django.http import  QueryDict
-
+from django.core.paginator import Paginator
 
 from .forms import  ActForm #CreateUserForm
 from .models import Act
@@ -80,14 +80,24 @@ def act_edit_form(request, pk):
 def act_list(request):
     current_user = request.user
     queryset = Act.objects.filter(user_id=current_user)
-    return render(request, 'dispatcher/act_list.html', {'acts':queryset})
+
+    paginator = Paginator(queryset, 15)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'dispatcher/act_list.html', {'acts':queryset, 'page_obj':page_obj})
 
 @login_required
 def dispatcher_act_list(request):
 
     if request.user.is_staff == 1:
         queryset = Act.objects.all().order_by('-date_updated')
-        return render(request, 'dispatcher/act_list.html',{'acts':queryset})
+
+        paginator = Paginator(queryset, 15)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        return render(request, 'dispatcher/act_list.html', {'acts':queryset, 'page_obj':page_obj})
     else:
         return render(request, 'dispatcher/no_access.html')
 
