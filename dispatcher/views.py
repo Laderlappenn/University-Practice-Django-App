@@ -5,12 +5,36 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, View
 from django.http import  QueryDict
 from django.core.paginator import Paginator
+from .forms import RegistrationForm
+from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect
+from django.contrib.auth import get_user_model
+from django.urls import reverse
+from django.contrib import messages
 
 from .forms import  ActForm #CreateUserForm
 from .models import Act
 
 def home(request):
     return render (request, 'dispatcher/home.html',{})
+
+def register(request):
+
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            login(request,user)
+            messages.success(request,("успешная регистрация"))
+            return HttpResponseRedirect('http://127.0.0.1:8000/list/')
+    else:
+        form = RegistrationForm()
+
+    return render(request, 'dispatcher/registration.html',{'form':form})
+
 
 class BBLoginView(LoginView):
     template_name = 'dispatcher/login.html'
@@ -42,6 +66,8 @@ def act_page_create(request):
     if request.method == 'POST':
         form = ActForm(request.POST)
         if form.is_valid():
+            user = request.user.id
+            form.instance.user_id = user
             form.save()
 
         return HttpResponseRedirect('http://127.0.0.1:8000/list/')
@@ -112,3 +138,9 @@ def accept_act(request, actid):
     if request.user.is_staff == 1:
         Act.objects.filter(id=actid).update(act_processing='Заявки принята')
         return render(request, 'dispatcher/details/accept-detail.html')
+
+
+
+def employees_list(request):
+
+    return render()

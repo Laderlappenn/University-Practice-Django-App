@@ -1,7 +1,8 @@
 from django.forms import ModelForm
 #from django import forms
-from .models import Act
-
+from .models import Act, Account
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
 # RELEVANCE_CHOICES = (
 #     (1, "Сантехника"),
 #     (2, "электрика"),
@@ -21,11 +22,16 @@ from .models import Act
 #         model = auth_user
 #         fields = '__all__'
 
+class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(max_length=254, help_text='Required. Add a valid email address.')
+
+    class Meta:
+        model = Account
+        fields = ('email', 'username', 'password1', 'password2',)
 
 class ActForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['user'].widget.attrs.update({'class': 'special'})
         self.fields['title'].widget.attrs.update({'class': 'special'})
         self.fields['adress'].widget.attrs.update({'class': 'special'})
         self.fields['act_type'].widget.attrs.update({'class': 'special'})
@@ -33,8 +39,9 @@ class ActForm(ModelForm):
         self.fields['image'].widget.attrs.update({'class': 'special'})
 
 
+
     class Meta:
         model = Act
         fields = '__all__'
-        exclude = ('act_processing', 'do_until', )
+        exclude = ('act_processing', 'do_until', 'user')
 

@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
+    path('register/', views.register, name='register'),
     path('login/', views.BBLoginView.as_view(), name='login'),
     path('accounts/login/', views.BBLogoutView.as_view(), name='logout'),
     path('profile/',views.profile,name='profile'),
@@ -17,5 +18,6 @@ urlpatterns = [
     path('dispatcher/list',views.dispatcher_act_list,name='dispatcher-act-list'),
     re_path(r'^act/(?P<actid>\d+)/return/$', views.return_act, name='return-act'),
     re_path(r'^act/(?P<actid>\d+)/accept/$', views.accept_act, name='return-act'),
+    path('employees/', views.employees_list, name='employees_list'),
 
     ]

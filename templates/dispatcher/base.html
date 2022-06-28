@@ -51,10 +51,16 @@ body {
   <a href="/profile/">Профиль</a>
   {% if user.is_authenticated %}<a href="{% url 'dispatcher:logout' %}">Выход</a>
   {% else %}
-  <a>Регистрация</a>
+  <a href="{% url 'dispatcher:register' %}">Регистрация</a>
   <a href="{% url 'dispatcher:login' %}">Вход</a>
   {% endif %}
   <a href="/dispatcher/list">Все заявки</a>
+  <a href="">Отчёты</a>
+  <a href="">Сотрудники</a>
+  <a href="">Телефония</a>
+  <a href="">Объекты</a>
+
+
 
 </div>
 
