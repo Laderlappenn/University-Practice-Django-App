@@ -29,26 +29,29 @@
 
 
       <h5> Заявка</h5>
-      <form action="{{HttpResponse}}" method="post">
+      <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
-        {{form.user.label_tag}}
-        {{form.user}} <br>
+       {{ form.as_ul }}
 
-        {{form.title.label_tag}}
-        {{form.title}} <br>
+<!-- 
+       {{form.user.label_tag}}
+       {{form.user}} <br>
 
-        {{form.adress.label_tag}}
-        {{form.adress}}<br>
+       {{form.title.label_tag}}
+       {{form.title}} <br>
 
-        {{form.act_type.label_tag}}
-        {{form.act_type}}<br>
+       {{form.adress.label_tag}}
+       {{form.adress}}<br>
 
-        {{form.text.label_tag}}
-        {{form.text}}<br>
+       {{form.act_type.label_tag}}
+       {{form.act_type}}<br>
 
-        {{form.image.label_tag}}
-        {{form.image}}<br>
+       {{form.text.label_tag}}
+       {{form.text}}<br>
+
+       {{form.image.label_tag}}
+       {{form.image}}<br> -->
 
         <input type="submit" value="Отправить">
       </form>

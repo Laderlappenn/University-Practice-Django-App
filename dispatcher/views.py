@@ -64,7 +64,7 @@ def act_page_create(request):
     form_class = ActForm
     form = form_class(request.POST or None)
     if request.method == 'POST':
-        form = ActForm(request.POST)
+        form = ActForm(request.POST, request.FILES)
         if form.is_valid():
             user = request.user.id
             form.instance.user_id = user

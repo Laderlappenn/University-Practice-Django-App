@@ -17,17 +17,14 @@
 
 
 
+  
   {% if request.user.is_staff == 1 %}
-
-
   <button hx-get="return" hx-target="this" hx-swap="outerHTML">
     Вернуть заявку
   </button>
   <button hx-get="accept" hx-target="this" hx-swap="outerHTML">
     Принять заявку
   </button>
-
-
   {% else %}
 
   {% endif %}
