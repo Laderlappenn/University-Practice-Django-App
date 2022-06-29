@@ -12,8 +12,9 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.contrib import messages
 
-from .forms import  ActForm #CreateUserForm
-from .models import Act
+from .forms import  ActForm
+from .models import Act, Account
+from django.db.models import Q
 
 def home(request):
     return render (request, 'dispatcher/home.html',{})
@@ -46,18 +47,6 @@ class BBLogoutView(LoginRequiredMixin, LogoutView):
 def profile(request):
     return render(request,'dispatcher/profile.html', {})
 
-# def register(request):
-#     form_class = CreateUserForm
-#     # if request is not post, initialize an empty form
-#     form = form_class(request.POST or None)
-#
-#     if request.method == 'POST':
-#         form = CreateUserForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#
-#
-#     return render(request, 'dispatcher/create_user.html', {'form':form})
 
 @login_required
 def act_page_create(request):
@@ -142,5 +131,6 @@ def accept_act(request, actid):
 
 
 def employees_list(request):
+    queryset = Account.objects.filter(~Q(type='USER'))
 
-    return render()
+    return render(request, 'dispatcher/employees_list.html', {'employees':queryset})

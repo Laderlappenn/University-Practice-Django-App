@@ -38,8 +38,8 @@ class ActForm(ModelForm):
         self.fields['text'].widget.attrs.update({'class': 'special'})
         self.fields['image'].widget.attrs.update({'class': 'special'})
 
-    image = forms.ImageField()
-    file = forms.FileField()
+    image = forms.ImageField(required = False)
+    file = forms.FileField(required = False)
 
     class Meta:
         model = Act

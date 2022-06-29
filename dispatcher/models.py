@@ -5,6 +5,8 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 # from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser
+from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username, password=None):
@@ -44,6 +46,16 @@ class Account(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
+    class Types(models.TextChoices):
+        USER = "USER", "User"
+        DISPATCHER = "DISPATCHER", "Dispatcher"
+        DEPARTMENT_HEAD = "DEPARTMENT_HEAD", "Department_head"
+        EXECUTOR = "EXECUTOR", "Executor"
+
+    base_type = Types.USER
+    type = models.CharField(
+        _("Type"), max_length=50, choices=Types.choices, default=base_type
+    )
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
@@ -61,6 +73,75 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.type = self.base_type
+        return super().save(*args, **kwargs)
+
+class UserManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(type=Account.Types.USER)
+
+class User(Account):
+    base_type = Account.Types.USER
+    objects = UserManager()
+
+    class Meta:
+        proxy = True
+
+    def whisper(self):
+        return "i'm user"
+
+
+class DispatcherManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(type=Account.Types.DISPATCHER)
+
+class Dispatcher(Account):
+    base_type = Account.Types.DISPATCHER
+    objects = DispatcherManager()
+
+    class Meta:
+        proxy = True
+
+    def whisper(self):
+        return "i'm dispatcher"
+
+
+class DepartmentHeadManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(type=Account.Types.DEPARTMENT_HEAD)
+
+class DepartmentHead(Account):
+    base_type = Account.Types.DEPARTMENT_HEAD
+    objects = DepartmentHeadManager()
+
+    class Meta:
+        proxy = True
+
+    def whisper(self):
+        return "i'm department head"
+
+
+class ExecutorManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(type=Account.Types.EXECUTOR)
+
+class Executor(Account):
+    base_type = Account.Types.EXECUTOR
+    objects = ExecutorManager()
+
+    class Meta:
+        proxy = True
+
+    def whisper(self):
+        return "i'm executor"
+
+# class ExecutorMore(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     gadgets = models.TextField()
+
+
 class Act(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date_created = models.DateTimeField(default=timezone.now, editable=False)
@@ -71,6 +152,7 @@ class Act(models.Model):
     text = models.TextField()
     image = models.ImageField(null=True, blank=True, upload_to='images/act_images')
     file = models.FileField(null=True, blank=True, upload_to='files/act_files')
+
 
     class ActProcesses(models.TextChoices):
         waiting = 'Ожидание принятия заявки'
