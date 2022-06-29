@@ -133,4 +133,8 @@ def accept_act(request, actid):
 def employees_list(request):
     queryset = Account.objects.filter(~Q(type='USER'))
 
-    return render(request, 'dispatcher/employees_list.html', {'employees':queryset})
+    paginator = Paginator(queryset, 15)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'dispatcher/employees_list.html', {'employees':queryset, 'page_obj':page_obj})
