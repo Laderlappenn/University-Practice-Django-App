@@ -1,2 +1,5 @@
 .env
-__pycache__
+__pycache__/
+website/__pycache__
+dispatcher/__pycache__/
+dispatcher/migrations/__pycache__/

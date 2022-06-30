@@ -129,12 +129,15 @@ def accept_act(request, actid):
         return render(request, 'dispatcher/details/accept-detail.html')
 
 
-
+@login_required
 def employees_list(request):
-    queryset = Account.objects.filter(~Q(type='USER'))
+    if request.user.is_staff == 1:
+        queryset = Account.objects.filter(~Q(type='USER'))
 
-    paginator = Paginator(queryset, 15)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+        paginator = Paginator(queryset, 15)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
 
-    return render(request, 'dispatcher/employees_list.html', {'employees':queryset, 'page_obj':page_obj})
+        return render(request, 'dispatcher/employees_list.html', {'employees':queryset, 'page_obj':page_obj})
+    else:
+        return render(request, 'dispatcher/no_access.html')
