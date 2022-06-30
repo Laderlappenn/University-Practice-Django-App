@@ -92,6 +92,7 @@ def act_edit_form(request, pk):
     return render(request,'dispatcher/forms/edit-act-form.html',{'act':queryset,'form':form})
 
 
+
 @login_required
 def act_list(request):
     current_user = request.user
