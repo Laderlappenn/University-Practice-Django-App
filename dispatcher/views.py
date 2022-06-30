@@ -58,12 +58,11 @@ def act_page_create(request):
             user = request.user.id
             form.instance.user_id = user
             form.save()
-
         return HttpResponseRedirect('http://127.0.0.1:8000/list/')
     else:
         form = ActForm()
 
-    return render(request, 'dispatcher/act.html', {'form': form})
+    return render(request, 'dispatcher/act.html', {'form': form, })
 
 @login_required
 def act_page(request, actid):
@@ -85,16 +84,26 @@ def act_page(request, actid):
     else:
         return render(request, 'dispatcher/no_access.html')
 
-
 def act_edit_form(request, pk):
     queryset = get_object_or_404(Act, pk=pk)
     form = ActForm(instance=queryset)
     return render(request,'dispatcher/forms/edit-act-form.html',{'act':queryset,'form':form})
 
+def return_act(request, actid):
+    if request.user.is_staff == 1:
+        Act.objects.filter(id=actid).update(act_processing='Заявка возвращена')
+
+        return render(request, 'dispatcher/details/return-detail.html')
+
+def accept_act(request, actid):
+    if request.user.is_staff == 1:
+        Act.objects.filter(id=actid).update(act_processing='Заявки принята')
+        return render(request, 'dispatcher/details/accept-detail.html')
 
 
 @login_required
 def act_list(request):
+
     current_user = request.user
     queryset = Act.objects.filter(user_id=current_user)
 
@@ -118,18 +127,19 @@ def dispatcher_act_list(request):
     else:
         return render(request, 'dispatcher/no_access.html')
 
+def act_status(request):
+    status = request.GET.get('status')
 
-def return_act(request, actid):
-    if request.user.is_staff == 1:
-        Act.objects.filter(id=actid).update(act_processing='Заявка возвращена')
+    if status == 'all':
+        queryset = Act.objects.all()
+    elif status == 'completed':
+        queryset = Act.objects.filter(completed=True)
+    elif status == 'uncompleted':
+        queryset = Act.objects.filter(completed=False)
+    elif status == 'new':
+        queryset = Act.objects.filter(act_processing='Ожидание принятия заявки')
 
-        return render(request, 'dispatcher/details/return-detail.html')
-
-def accept_act(request, actid):
-    if request.user.is_staff == 1:
-        Act.objects.filter(id=actid).update(act_processing='Заявки принята')
-        return render(request, 'dispatcher/details/accept-detail.html')
-
+    return render(request,'dispatcher/details/act-status.html', {'status':queryset} )
 
 @login_required
 def employees_list(request):

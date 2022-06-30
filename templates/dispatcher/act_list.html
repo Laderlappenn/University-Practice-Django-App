@@ -26,7 +26,8 @@
 </head>
     {% block content %}
 
-
+<!-- HTMX -->
+<script src="https://unpkg.com/htmx.org@1.6.1"></script>
 
 {% if act_sent %}
 <br>
@@ -80,11 +81,24 @@
   </select>
 </div>
 
+<br>
+
+<div>
+  <label >Заявки:</label>
+  <select name="status" hx-get="status" hx-target="#body" hx-swap="outerHTML" hx-indicator=".htmx-indicator">
+    <option value="all">Все</option>
+    <option value="completed">Выполненные</option>
+    <option value="uncompleted">Не выполненные</option>
+    <option value="new">Новые</option>
+  </select>
+</div>
+
+
 
 
 
  <hr>
-<table>
+<table id="body">
   <thead>
     <tr>
       <th>User name</th>
@@ -106,7 +120,6 @@
       <td>{{obj.date_created}}</td>
       <td>{{obj.date_updated}}</td>      
       <td><a href="http://127.0.0.1:8000/act/{{obj.id}}">Смотреть заявку</a></td>
-    
     </tr>
     {% endfor %}
   </tbody>

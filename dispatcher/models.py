@@ -153,7 +153,7 @@ class Act(models.Model):
     text = models.TextField()
     image = models.ImageField(null=True, blank=True, upload_to='images/act_images')
     file = models.FileField(null=True, blank=True, upload_to='files/act_files')
-
+    completed = models.BooleanField(default=False)
 
     class ActProcesses(models.TextChoices):
         waiting = 'Ожидание принятия заявки'
