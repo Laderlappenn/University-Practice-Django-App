@@ -161,7 +161,7 @@ class Act(models.Model):
         returned = 'Заявка возвращена'
 
     act_processing = models.CharField(max_length=25, choices=ActProcesses.choices, default=ActProcesses.waiting)
-    do_until = models.DateTimeField(null=True)
+    do_until = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.title

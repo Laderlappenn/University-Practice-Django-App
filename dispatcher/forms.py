@@ -46,3 +46,19 @@ class ActForm(ModelForm):
         fields = '__all__'
         exclude = ('act_processing', 'do_until', 'user')
 
+
+class ActSetDateForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['do_until'].widget.attrs.update({'class': 'special'})
+
+    class Meta:
+        model = Act
+        fields = ('do_until',)
+        widgets = {
+            'do_until': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        }
+
+
+
+

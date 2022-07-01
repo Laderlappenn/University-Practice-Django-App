@@ -5,12 +5,13 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, View
 from django.http import  QueryDict
 from django.core.paginator import Paginator
-from .forms import RegistrationForm
+from .forms import RegistrationForm, ActSetDateForm
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.contrib import messages
+from django.utils import timezone
 
 from .forms import  ActForm
 from .models import Act, Account
@@ -100,6 +101,22 @@ def accept_act(request, actid):
         Act.objects.filter(id=actid).update(act_processing='Заявки принята')
         return render(request, 'dispatcher/details/accept-detail.html')
 
+def set_date(request, actid):
+    if request.user.is_staff == 1:
+        if request.method == 'GET':
+            queryset = Act.objects.filter(id=actid).values_list('do_until', flat=True).first()
+
+            form = ActSetDateForm()#instance=queryset
+            return render(request, 'dispatcher/forms/date-form.html', {'form': form,'act':actid, 'date':queryset})
+        if request.method == 'PUT':
+            queryset = get_object_or_404(Act, id=actid)
+            data = QueryDict(request.body).dict()
+            form = ActSetDateForm(data, instance=queryset)
+            if form.is_valid():
+                form.save()
+
+        return render(request, 'dispatcher/details/accept-detail.html')
+
 
 @login_required
 def act_list(request):
@@ -131,13 +148,16 @@ def act_status(request):
     status = request.GET.get('status')
 
     if status == 'all':
-        queryset = Act.objects.all()
+        queryset = Act.objects.all().order_by('-date_updated')
     elif status == 'completed':
         queryset = Act.objects.filter(completed=True)
     elif status == 'uncompleted':
         queryset = Act.objects.filter(completed=False)
     elif status == 'new':
         queryset = Act.objects.filter(act_processing='Ожидание принятия заявки')
+    elif status == 'expired':
+        now = timezone.localtime(timezone.now())
+        queryset = Act.objects.filter(do_until__lt=now).exclude(do_until=None)
 
     return render(request,'dispatcher/details/act-status.html', {'status':queryset} )
 

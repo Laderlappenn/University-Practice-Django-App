@@ -18,6 +18,7 @@ urlpatterns = [
     path('dispatcher/list',views.dispatcher_act_list,name='dispatcher-act-list'),
     re_path(r'^act/(?P<actid>\d+)/return/$', views.return_act, name='return-act'),
     re_path(r'^act/(?P<actid>\d+)/accept/$', views.accept_act, name='return-act'),
+    re_path(r'^act/(?P<actid>\d+)/date/$', views.set_date, name='set-date'),
     path('employees/', views.employees_list, name='employees_list'),
     path('dispatcher/status/',views.act_status, name='act-status'),
 

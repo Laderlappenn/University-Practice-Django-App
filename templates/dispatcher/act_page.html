@@ -16,7 +16,6 @@
   </div>
 
 
-
   
   {% if request.user.is_staff == 1 %}
   <button hx-get="return" hx-target="this" hx-swap="outerHTML">
@@ -25,6 +24,14 @@
   <button hx-get="accept" hx-target="this" hx-swap="outerHTML">
     Принять заявку
   </button>
+  
+  <br>
+  <br>
+
+  <button id="date-detail" hx-get="date" hx-target="this" hx-swap="outerHTML">
+    Выставить дату
+  </button>
+
   {% else %}
 
   {% endif %}
