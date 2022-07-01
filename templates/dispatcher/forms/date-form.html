@@ -1,0 +1,10 @@
+<h3>Текущая дата: {{date}}</h3>
+
+<form hx-put="http://127.0.0.1:8000/act/{{act}}/date/" hx-targer="#date-detail">
+    {% csrf_token %}
+
+    {{form.as_ul}}
+
+    <input class="btn btn-primary" type="submit"/>
+
+</form> 

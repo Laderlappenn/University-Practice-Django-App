@@ -109,6 +109,7 @@ def set_date(request, actid):
             form = ActSetDateForm()#instance=queryset
             return render(request, 'dispatcher/forms/date-form.html', {'form': form,'act':actid, 'date':queryset})
         if request.method == 'PUT':
+            # optimize query
             queryset = get_object_or_404(Act, id=actid)
             data = QueryDict(request.body).dict()
             form = ActSetDateForm(data, instance=queryset)
