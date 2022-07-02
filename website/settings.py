@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'sorl.thumbnail',
     'dispatcher',
+    'django_cleanup.apps.CleanupConfig',
 
 ]
 
