@@ -21,5 +21,7 @@ urlpatterns = [
     re_path(r'^act/(?P<actid>\d+)/date/$', views.set_date, name='set-date'),
     path('employees/', views.employees_list, name='employees_list'),
     path('dispatcher/status/',views.act_status, name='act-status'),
+    path('dispatcher/search',views.act_search, name='act-search'),
+
 
     ]

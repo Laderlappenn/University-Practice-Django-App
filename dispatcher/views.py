@@ -145,6 +145,7 @@ def dispatcher_act_list(request):
     else:
         return render(request, 'dispatcher/no_access.html')
 
+
 def act_status(request):
     status = request.GET.get('status')
 
@@ -161,6 +162,21 @@ def act_status(request):
         queryset = Act.objects.filter(do_until__lt=now).exclude(do_until=None)
 
     return render(request,'dispatcher/details/act-status.html', {'status':queryset} )
+
+def act_search(request):
+    if request.method == 'POST':
+        # any orm injections?
+        search = request.POST['search']
+        acts = Act.objects.all()
+        queryset = [act for act in acts if (
+                    (search.lower() in act.title.lower())
+                    or
+                    (search.lower() in act.adress.lower())
+                    or
+                    (search.lower() in act.text.lower())
+                )]
+        return render(request,'dispatcher/details/act-status.html', {'status':queryset} )
+
 
 @login_required
 def employees_list(request):

@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-#from django import forms
+from django import forms
 from .models import Act, Account
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -59,6 +59,6 @@ class ActSetDateForm(ModelForm):
             'do_until': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         }
 
-
-
+# class ActSearch(forms.Form):
+#     search = forms.CharField(label='Поиск', max_length=100)
 
