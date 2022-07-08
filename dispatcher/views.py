@@ -135,7 +135,8 @@ def act_list(request):
 def dispatcher_act_list(request):
 
     if request.user.is_staff == 1:
-        queryset = Act.objects.all().order_by('-date_updated')
+        # less queries with select_related?
+        queryset = Act.objects.select_related().all().order_by('-date_updated')
 
         paginator = Paginator(queryset, 15)
         page_number = request.GET.get('page')
